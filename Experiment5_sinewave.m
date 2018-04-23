@@ -11,8 +11,9 @@ t=0:Ts:5e-3-Ts;
 x= A*sin(2*pi*500*t);
 len = length(t);
 %plot the modulating signal
-figure(1);
+subplot(2,2,1);
 plot(t,x,'r');
+title('Modulating signal');
 %Specify the length of the stair fn
 delta = 0.2;
 xn=0;
@@ -27,9 +28,9 @@ for i =1:len-1;
     end
 end
 %plot the signal after DM.
-figure(2);
+subplot(2,2,2);
 stairs(t,xn);
-
+title('signal after Delta modulation');
  %Demodualtion 
 for i=1:d
     if d(i)>xn(i)
@@ -41,8 +42,9 @@ for i=1:d
     end
 end
 %plot demodulated signal
-figure(3);
+subplot(2,2,3);
 plot(t,xn,'c');
+title('signal after demodulation');
 %Adjust the low pass filter
 cut_off=1.5e3/Fs/2;
 order=32;
@@ -50,8 +52,9 @@ h=fir1(order,cut_off);
 %pass the demodulated signa; through the filter in the time domain.
 con=conv(xn,h);
 %plot the resulting signal after smoothing.
-figure(4);
+subplot(2,2,4);
 plot(con);
+title('Signal after smoothing');
 %calc square error
 
         

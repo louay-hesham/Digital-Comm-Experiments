@@ -7,15 +7,15 @@ Ts=1/Fs;
 t=0:Ts:5e-3-Ts;
 %modulating signal
 %square wave
-x= square(2*pi*500*t);
-%x=5*ones(1,length(t));
+%x= square(2*pi*500*t);
+x=5*ones(1,length(t));
 %DC signal
 len = length(t);
 %plot the modulating signal
 figure(1);
 subplot(2,2,1);
 plot(t,x,'r');
-title('modulating signal');yom
+title('modulating signal');
 %Specify the length of the stair fn
 delta = 0.2;
 xn=0;
