@@ -1,0 +1,1 @@
+length = 10^6;message = randi([0 1],1,(length));  SNR = 0:2:30;g = [1 0 0 0 0 1 1; 0 1 0 0 1 0 1;0 0 1 0 1 1 0;0 0 0 1 1 1 1];encoded = encode(message,7, 4,'linear/fmt',g);bpsk = encoded;for i=1:length:  bpsk(i) = 2 * bpsk(i) - 1; end %bpsk is modulated now %calculate BEr using Exp_1  
