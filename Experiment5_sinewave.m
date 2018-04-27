@@ -27,11 +27,13 @@ for i =1:len-1;
         xn(i+1)=xn(i)-delta;
     end
 end
+
+
 %plot the signal after DM.
 subplot(2,2,2);
 stairs(t,xn);
 title('signal after Delta modulation');
- %Demodualtion 
+ %Demodulation
 for i=1:d
     if d(i)>xn(i)
         d(i)=0;
@@ -45,6 +47,46 @@ end
 subplot(2,2,3);
 plot(t,xn,'c');
 title('signal after demodulation');
+
+%BONUS
+%Variable slope modulation
+threshold = 15; %should be changed though
+differential = diff(x);
+vxn = 0;
+for i =1:len-1;
+    change = delta;
+    if differential(i) > threshold
+        change = 2 * delta;
+    end
+    if x(i)>vxn(i)
+        vd(i)=1;
+        vxn(i+1)=vxn(i)+change;
+    else
+        vd(i) =0;
+        vxn(i+1)=vxn(i)-change;
+    end
+end
+%Demodulation
+for i=1:d
+    if vd(i)>vxn(i)
+        vd(i)=0;
+        vxn(i+1)=vxn(i+1)-delta;
+    else
+        vd(i)=1;
+        vxn(i+1)=vxn(i)+delta;
+    end
+end
+%plot demodulated signal
+subplot(2,2,4);
+plot(t,vxn,'c');
+title('signal after demodulation with variable delta');
+%Demodulation using DPCM
+xndpcm(1) = xn(1)
+xndpcm(2) = xn(2)
+for i = 3: len;
+    xndpcm(i+1) = 2 * xndpcm(i) - xndpcm(i-1)
+
+
 %Adjust the low pass filter
 cut_off=1.5e3/Fs/2;
 order=32;
@@ -57,4 +99,3 @@ plot(con);
 title('Signal after smoothing');
 %calc square error
 
-        
