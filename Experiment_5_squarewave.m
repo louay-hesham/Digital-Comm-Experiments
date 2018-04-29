@@ -7,9 +7,10 @@ Ts=1/Fs;
 t=0:Ts:0.1
 %modulating signal
 %square wave
-x= square(2*pi*(Fs/500)*t);
-%x=5*ones(1,length(t));
+%x= square(2*pi*(Fs/500)*t);
 %DC signal
+x=5*ones(1,length(t));
+
 len = length(t);
 %plot the modulating signal
 figure(1);
