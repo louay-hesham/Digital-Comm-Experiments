@@ -1,15 +1,16 @@
 clc;
 clear all;
 close all;
-Fs=200e3;
+Fs=10000;
 Ts=1/Fs;
 %x-coordinate (x-axis) from(0 till 5*10^-3)
-t=0:Ts:5e-3-Ts;
+t=0:Ts:0.1
 %modulating signal
 %square wave
-%x= square(2*pi*500*t);
-x=5*ones(1,length(t));
+%x= square(2*pi*(Fs/500)*t);
 %DC signal
+x=5*ones(1,length(t));
+
 len = length(t);
 %plot the modulating signal
 figure(1);
@@ -50,15 +51,15 @@ subplot(2,2,3);
 plot(t,xn,'c');
 title('signal after demodulation');
 %Adjust the low pass filter
-cut_off=1.5e3/Fs/2;
-order=32;
-h=fir1(order,cut_off);
-%pass the demodulated signa; through the filter in the time domain.
-con=conv(xn,h);
+order=3;
+frame=81;
+h= sgolayfilt(xn,order,frame);
 %plot the resulting signal after smoothing.
-subplot(2,2,4)
-plot(con);
-title('signal after smoothing');
+subplot(2,2,4);
+plot(t,h);
+title('Signal after smoothing');
 %calc square error
+err = immse(x,h );
+fprintf('\n The mean-squared error is %0.4f\n', err);
 
         
