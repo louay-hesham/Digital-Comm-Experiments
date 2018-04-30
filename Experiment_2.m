@@ -2,7 +2,7 @@ x = randi([0 1],1,(10^6));
 SNR = 0:2:30;               
 m = 10;
 sampling_number = 10;
-threshold=5*sqrt(1/10);
+threshold=1.5;
 %x_waveform = nan(1,10^7);
 %for i=1:length(x)
  %   for j=1:length(x)
@@ -11,7 +11,7 @@ threshold=5*sqrt(1/10);
     %    end
    % end
 % end
-x_waveform=reshape(repmat(x,m,1),1,[]).*sqrt(1/10);  %reapeat matrix m 10 times then reshaping it to 1*10^7 vector
+x_waveform=reshape(repmat(x,m,1),1,[]).*0.3;  %reapeat matrix m 10 times then reshaping it to 1*10^7 vector
 Average_power = ((1/10^7) * sum(x_waveform.^2)) % Average power of transimtter
 for i=1:length(SNR)         % Looping on the SNR values
     Rx_sequence=awgn(x_waveform, SNR(i),'measured' );    %Apply noise to the signal
