@@ -16,6 +16,7 @@ plot(t,x,'r');
 title('Modulating signal');
 %Specify the length of the stair fn
 delta = 0.2;
+%you may also change delta value as required delta = 1*delta
 xn=0;
 %start modulation
 for i =1:len-1;
