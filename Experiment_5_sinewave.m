@@ -1,14 +1,6 @@
 clc;
 clear all;
 close all;
-function errorsat(x,xn,t, title )
-  order=3;
-  frame=81;
-  h= sgolayfilt(xn,order,frame);
-  calc square error
-  err = immse(x,h);
-  fprintf('%f',strcat(title , '\n The mean squared error is %0.4f\n', err));
-end
 %Sine wave Amplitude,Sampling frequency and sampling time.
 A=2;
 Fs=10000;
@@ -73,14 +65,22 @@ end
 subplot(2,2,4);
 plot(t,vxn,'c');
 title('signal after demodulation with variable delta');
-errorsat(x,vxn,t,'Variable Delta Modulation: ');
+order=3;
+frame=81;
+vxnh= sgolayfilt(xn,order,frame);
+%calc square error
+err = immse(x,vxnh);
+fprintf( '\n Variable delta modulation: The mean squared error is %0.4f\n', err);
 %Demodulation using DPCM
 xndpcm(1) = xn(1)
 xndpcm(2) = xn(2)
 for i = 2: len;
     xndpcm(i+1) = 2 * xndpcm(i) - xndpcm(i-1);
 end
-errorsat(x,xndpcm,t,'DPCM Modulation: ');
+vxnh= sgolayfilt(xn,order,frame);
+%calc square error
+err = immse(x,vxnh);
+fprintf( '\n DPCM Modulation: Variable delta modulation: The mean squared error is %0.4f\n', err);
 
  %Demodualtion
 for i=1:d
