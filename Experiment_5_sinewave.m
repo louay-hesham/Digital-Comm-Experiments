@@ -1,6 +1,14 @@
 clc;
 clear all;
 close all;
+function errorsat(x,xn,t, title )
+  order=3;
+  frame=81;
+  h= sgolayfilt(xn,order,frame);
+  calc square error
+  err = immse(x,h);
+  fprintf('%f',strcat(title , '\n The mean squared error is %0.4f\n', err));
+end
 %Sine wave Amplitude,Sampling frequency and sampling time.
 A=2;
 Fs=10000;
@@ -32,7 +40,49 @@ end
 subplot(2,2,2);
 stairs(t,xn);
 title('signal after Delta modulation');
- %Demodualtion 
+
+%BONUS
+%Variable slope modulation
+threshold = 15; %should be changed though
+differential = diff(x);
+vxn = 0;
+for i =1:len-1;
+    change = delta;
+    if differential(i) > threshold
+        change = 2 * delta;
+    end
+    if x(i)>vxn(i)
+        vd(i)=1;
+        vxn(i+1)=vxn(i)+change;
+    else
+        vd(i) =0;
+        vxn(i+1)=vxn(i)-change;
+    end
+end
+%Demodulation
+for i=1:d
+    if vd(i)>vxn(i)
+        vd(i)=0;
+        vxn(i+1)=vxn(i+1)-delta;
+    else
+        vd(i)=1;
+        vxn(i+1)=vxn(i)+delta;
+    end
+end
+%plot demodulated signal
+subplot(2,2,4);
+plot(t,vxn,'c');
+title('signal after demodulation with variable delta');
+errorsat(x,vxn,t,'Variable Delta Modulation: ');
+%Demodulation using DPCM
+xndpcm(1) = xn(1)
+xndpcm(2) = xn(2)
+for i = 2: len;
+    xndpcm(i+1) = 2 * xndpcm(i) - xndpcm(i-1);
+end
+errorsat(x,xndpcm,t,'DPCM Modulation: ');
+
+ %Demodualtion
 for i=1:d
     if d(i)>xn(i)
         d(i)=0;
